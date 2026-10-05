@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Exam Browser</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f9ff;
+    color: #444;
+}
+
+
+/* ================================
+   APP
+================================ */
+
+.app {
+    min-height: 100vh;
+    background: #f8faff;
+    overflow: hidden;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.header {
+    position: relative;
+
+    min-height: 500px;
+
+    padding: 55px 7% 45px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            145deg,
+            #858bef,
+            #737de8
+        );
+
+    overflow: hidden;
+}
+
+
+/* background dekorasi */
+
+.header::before {
+    content: "";
+
+    position: absolute;
+
+    width: 480px;
+    height: 480px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.04);
+
+    right: -180px;
+    top: -280px;
+}
+
+.header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.035);
+
+    left: -170px;
+    bottom: -220px;
+}
+
+
+/* ================================
+   TOP
+================================ */
+
+.top {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* Jam */
+
+.time {
+    font-size: 13px;
+    opacity: .9;
+}
+
+
+/* ================================
+   GREETING
+================================ */
+
+.greeting {
+    position: relative;
+    z-index: 5;
+
+    margin-top: 20px;
+}
+
+.greeting h1 {
+    font-size: 30px;
+
+    font-weight: 800;
+
+    margin-bottom: 10px;
+}
+
+.greeting p {
+    max-width: 360px;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    font-style: italic;
+}
+
+
+/* ================================
+   GAMBAR KANAN
+================================ */
+
+.side-image,
+.side-symbol {
+
+    position: absolute;
+
+    right: 7%;
+    top: 60px;
+
+    width: 75px;
+    height: 75px;
+
+    z-index: 10;
+}
+
+
+/* default bulan/matahari */
+
+.side-symbol {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 55px;
+
+    cursor: pointer;
+}
+
+
+/* foto custom */
+
+.side-image {
+
+    display: none;
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+}
+
+
+/* ================================
+   BANNER
+================================ */
+
+.banner {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: min(100%, 1050px);
+
+    margin: 45px auto 0;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background: #dff8ff;
+
+    box-shadow:
+        0 15px 30px
+        rgba(40,80,150,.20);
+
+    animation:
+        bannerAppear .8s ease;
+}
+
+
+/* gambar banner */
+
+.banner img {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 350px;
+
+    object-fit: cover;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.main {
+
+    min-height:
+        calc(100vh - 500px);
+
+    padding:
+        70px
+        7%
+        120px;
+
+    background:
+        #f8faff;
+}
+
+
+/* ================================
+   MENU
+================================ */
+
+.menu {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 60px;
+
+    animation:
+        fadeUp .8s .2s both;
+}
+
+
+/* item */
+
+.menu-item {
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease;
+}
+
+.menu-item:hover {
+
+    transform:
+        translateY(-7px);
+}
+
+
+/* ================================
+   ICON MENU
+================================ */
+
+.menu-icon {
+
+    width: 85px;
+    height: 85px;
+
+    margin: auto;
+
+    border-radius: 19px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 35px;
+
+    transition: .25s;
+}
+
+
+/* QR */
+
+.menu-item:nth-child(1)
+.menu-icon {
+
+    background: #eadcff;
+
+    color: #a855e8;
+}
+
+
+/* URL */
+
+.menu-item:nth-child(2)
+.menu-icon {
+
+    background: #eedaff;
+
+    color: #a943d7;
+}
+
+
+/* UJIAN */
+
+.menu-item:nth-child(3)
+.menu-icon {
+
+    background: #ffdce6;
+
+    color: #f2678d;
+}
+
+
+.menu-item:hover
+.menu-icon {
+
+    transform:
+        scale(1.07);
+
+    box-shadow:
+        0 12px 25px
+        rgba(100,110,220,.18);
+}
+
+
+/* ================================
+   TEXT MENU
+================================ */
+
+.menu-title {
+
+    margin-top: 12px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #555;
+}
+
+
+/* ================================
+   FLOATING BUTTON
+================================ */
+
+.floating {
+
+    position: fixed;
+
+    right: 28px;
+    bottom: 92px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #8189ed;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(100,110,220,.3);
+
+    cursor: pointer;
+
+    z-index: 50;
+
+    transition: .25s;
+}
+
+.floating:hover {
+
+    transform:
+        scale(1.08);
+}
+
+
+/* ================================
+   BOTTOM NAVIGATION
+================================ */
+
+.bottom-nav {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 75px;
+
+    background:
+        rgba(255,255,255,.98);
+
+    border-top:
+        1px solid #ececf1;
+
+    box-shadow:
+        0 -4px 20px
+        rgba(50,60,100,.04);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7%;
+
+    z-index: 40;
+}
+
+
+.nav-item {
+
+    width: 50px;
+
+    text-align: center;
+
+    color: #aaa;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.nav-item:hover {
+
+    color: #777;
+
+    transform:
+        translateY(-3px);
+}
+
+
+.nav-icon {
+
+    font-size: 22px;
+}
+
+
+.nav-label {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 8px;
+}
+
+
+/* tombol dashboard */
+
+.active-circle {
+
+    width: 48px;
+    height: 48px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background:
+        #8189ed;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(110,120,230,.25);
+}
+
+
+/* ================================
+   TOAST
+================================ */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 100px;
+
+    transform:
+        translate(-50%,20px);
+
+    padding:
+        11px 22px;
+
+    background:
+        #333;
+
+    color:
+        white;
+
+    border-radius:
+        30px;
+
+    font-size:
+        12px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 100;
+
+    transition: .3s;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translate(-50%,0);
+}
+
+
+/* ================================
+   ANIMATION
+================================ */
+
+@keyframes bannerAppear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px) {
+
+    .header {
+
+        min-height: 400px;
+
+        padding:
+            45px 20px 30px;
+    }
+
+    .greeting h1 {
+
+        font-size: 22px;
+    }
+
+    .greeting p {
+
+        font-size: 10px;
+
+        max-width: 250px;
+    }
+
+    .side-symbol,
+    .side-image {
+
+        width: 55px;
+        height: 55px;
+
+        right: 20px;
+        top: 55px;
+    }
+
+    .side-symbol {
+
+        font-size: 42px;
+    }
+
+    .banner {
+
+        margin-top: 35px;
+
+        border-radius: 12px;
+    }
+
+    .banner.jpeg {
+
+        max-height: 250px;
+    }
+
+    .main {
+
+        min-height:
+            calc(100vh - 400px);
+
+        padding:
+            65px 20px 110px;
+    }
+
+    .menu {
+
+        gap: 18px;
+    }
+
+    .menu-icon {
+
+        width: 65px;
+        height: 65px;
+
+        font-size: 28px;
+
+        border-radius: 15px;
+    }
+
+    .menu-title {
+
+        font-size: 9px;
+    }
+
+    .bottom-nav {
+
+        gap: 3%;
+    }
+
+    .floating {
+
+        right: 18px;
+        bottom: 90px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="header">
+
+
+        <div class="top">
+
+            <div
+                class="time"
+                id="time">
+
+                00:00:00
+
+            </div>
+
+        </div>
+
+
+        <!-- UCAPAN -->
+
+        <div class="greeting">
+
+            <h1 id="greeting">
+                Hallo, Selamat Malam!
+            </h1>
+
+            <p>
+                "Ilmu bukanlah apa yang dihafal,
+                akan tetapi yang bermanfaat."
+            </p>
+
+        </div>
+
+
+        <!--
+            GAMBAR BULAN / MATAHARI
+
+            Klik gambar ini untuk mengganti
+            dengan foto/gambar sendiri.
+        -->
+
+        <div
+            class="side-symbol"
+            id="sideSymbol"
+            title="Klik untuk mengganti gambar">
+
+            🌙
+
+        </div>
+
+
+        <img
+            id="sideImage"
+            class="side-image"
+            alt="Foto pilihan">
+
+
+        <input
+            type="file"
+            id="imagePicker"
+            accept="image/*"
+            hidden>
+
+
+        <!-- ======================================
+             BANNER FOTO
+        ======================================= -->
+
+        <div class="banner">
+
+            <img
+                src="banner.jpeg"
+                alt="Keep Calm And Study Hard">
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ==========================================
+         MENU
+    =========================================== -->
+
+    <main class="main">
+
+
+        <div class="menu">
+
+
+            <!-- QR -->
+
+            <div
+                class="menu-item"
+                onclick="showToast('Scan QRCode')">
+
+                <div class="menu-icon">
+                    ▦
+                </div>
+
+                <div class="menu-title">
+                    SCAN QRCODE
+                </div>
+
+            </div>
+
+
+            <!-- URL -->
+
+            <a 
+    href="https://google.com"
+    class="menu-item"
+    target="_blank">
+
+    <div class="menu-icon">
+        ▤
+    </div>
+
+    <div class="menu-title">
+        MASUK URL
+    </div>
+
+</a>
+
+
+            <!-- UJIAN -->
+
+            <a 
+ href="https://s.id/AsesmenSMAN1Babelan?s=qr"
+ class="menu-item">
+
+<div class="menu-icon">
+    ▣
+</div>
+
+<div class="menu-title">
+    E-UJIAN
+</div>
+
+</a>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         FLOAT BUTTON
+    =========================================== -->
+
+    <div
+        class="floating"
+        onclick="showToast('Dashboard')">
+
+        ◇
+
+    </div>
+
+
+
+    <!-- ==========================================
+         BOTTOM NAV
+    =========================================== -->
+
+    <nav class="bottom-nav">
+
+
+        <a 
+ href="https://drive.google.com/drive/folders/1VUTkupvvzwAXKT1MPAG3zDlxQlBh63TN"
+ class="nav-item">
+
+<div class="nav-icon">
+    ◎
+</div>
+
+<span class="nav-label">
+    Profile
+</span>
+
+</a>
+
+
+
+        <div
+            class="nav-item"
+            onclick="showToast('Dokumen')">
+
+            <div class="nav-icon">
+                ▱
+            </div>
+
+            <span class="nav-label">
+                Dokumen
+            </span>
+
+        </div>
+
+
+        <div class="nav-item">
+
+            <div class="active-circle">
+                ◇
+            </div>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="showToast('Setting')">
+
+            <div class="nav-icon">
+                ⚙
+            </div>
+
+            <span class="nav-label">
+                Setting
+            </span>
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="showToast('Exit')">
+
+            <div class="nav-icon">
+                ⇥
+            </div>
+
+            <span class="nav-label">
+                Exit
+            </span>
+
+        </div>
+
+
+    </nav>
+
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+
+<script>
+
+
+/* ==========================================
+   JAM + BULAN / MATAHARI OTOMATIS
+========================================== */
+
+const timeElement =
+    document.getElementById("time");
+
+const greetingElement =
+    document.getElementById("greeting");
+
+const sideSymbol =
+    document.getElementById("sideSymbol");
+
+
+function updateTime() {
+
+    const now = new Date();
+
+    const hour =
+        now.getHours();
+
+    const minute =
+        String(now.getMinutes())
+        .padStart(2, "0");
+
+    const second =
+        String(now.getSeconds())
+        .padStart(2, "0");
+
+
+    timeElement.textContent =
+        `${String(hour).padStart(2,"0")}:${minute}:${second}`;
+
+
+    /*
+       05:00 - 10:59
+       PAGI
+    */
+
+    if (hour >= 5 && hour < 11) {
+
+        greetingElement.textContent =
+            "Hallo, Selamat Pagi!";
+
+        sideSymbol.textContent =
+            "☀️";
+    }
+
+
+    /*
+       11:00 - 14:59
+       SIANG
+    */
+
+    else if (hour >= 11 && hour < 15) {
+
+        greetingElement.textContent =
+            "Hallo, Selamat Siang!";
+
+        sideSymbol.textContent =
+            "☀️";
+    }
+
+
+    /*
+       15:00 - 17:59
+       SORE
+    */
+
+    else if (hour >= 15 && hour < 18) {
+
+        greetingElement.textContent =
+            "Hallo, Selamat Sore!";
+
+        sideSymbol.textContent =
+            "🌤️";
+    }
+
+
+    /*
+       18:00 - 04:59
+       MALAM
+    */
+
+    else {
+
+        greetingElement.textContent =
+            "Hallo, Selamat Malam!";
+
+        sideSymbol.textContent =
+            "🌙";
+    }
+
+}
+
+
+updateTime();
+
+setInterval(
+    updateTime,
+    1000
+);
+
+
+
+/* ==========================================
+   GANTI BULAN/MATAHARI DENGAN FOTO
+========================================== */
+
+const imagePicker =
+    document.getElementById("imagePicker");
+
+const sideImage =
+    document.getElementById("sideImage");
+
+
+sideSymbol.addEventListener(
+    "click",
+    function() {
+
+        imagePicker.click();
+
+    }
+);
+
+
+sideImage.addEventListener(
+    "click",
+    function() {
+
+        imagePicker.click();
+
+    }
+);
+
+
+imagePicker.addEventListener(
+    "change",
+    function(event) {
+
+        const file =
+            event.target.files[0];
+
+        if (!file) return;
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e) {
+
+                sideImage.src =
+                    e.target.result;
+
+                sideImage.style.display =
+                    "block";
+
+                sideSymbol.style.display =
+                    "none";
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(
+            function() {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            1300
+        );
+}
+
+</script>
+
+</body>
+</html>
